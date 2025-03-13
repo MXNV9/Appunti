@@ -1,0 +1,206 @@
+@import 'tailwindcss';
+
+body {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+h2{
+  @apply text-4xl
+}
+
+/********* Navbar *********/
+
+/********* Generali *********/
+
+.icon-link,
+.link,
+.link1,
+.logo,
+.sign,
+.sign-active,
+.search-bar,
+input[type='text'],
+button {
+  cursor: pointer;
+}
+
+.link,
+.link1,
+.sign,
+.sign-active {
+  @apply font-medium;
+}
+
+/********* Logo *********/
+.logo {
+  @apply h-[100px] text-[56px];
+  @apply bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent;
+}
+
+/********* Testo Link *********/
+
+.link:hover {
+  @apply bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent;
+  @apply transition duration-250;
+}
+
+.link1 {
+  @apply p-2;
+}
+
+.link1:hover {
+  @apply bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent;
+  @apply transition duration-250;
+}
+
+.icon-link:hover {
+  @apply rounded-full bg-gradient-to-r from-red-500 to-orange-500;
+  @apply text-white;
+  @apply transition duration-250;
+}
+
+.sign-active {
+  @apply rounded-full bg-gradient-to-r from-red-500 to-orange-500;
+  @apply text-white;
+  @apply transition duration-250;
+}
+.sign-active:hover {
+  @apply rounded-full bg-gradient-to-r from-red-500 to-black;
+  @apply text-white;
+  @apply transition duration-250;
+}
+.sign:hover {
+  @apply rounded-full bg-gradient-to-r from-red-500 to-orange-500;
+  @apply text-white;
+  @apply transition duration-250;
+}
+
+/********* Barra di ricerca *********/
+
+.search-bar {
+  @apply flex items-center justify-between gap-2;
+  @apply w-[800px] rounded-3xl p-[12px];
+  @apply border;
+}
+
+.search-bar input[type='text'] {
+  @apply w-full outline-none;
+}
+
+.search-bar button {
+  @apply rounded-full bg-amber-400 p-1 text-white;
+}
+
+.search-bar button:hover {
+  @apply rounded-full bg-black p-1 text-amber-400;
+}
+
+/********* Bottoni *********/
+
+/********* Bottone Forato *********/
+.dashed-effect-button-plain {
+  @apply relative w-[200px] cursor-pointer rounded-xl border-none bg-white px-5 py-2 text-black transition-all duration-300 ease-in-out;
+}
+.dashed-effect-button-plain::before {
+  @apply pointer-events-none absolute inset-0 rounded-xl border border-black transition-colors duration-300 ease-in-out content-[''];
+}
+
+.dashed-effect-button-info {
+  @apply relative w-[200px] cursor-pointer rounded-xl border-none bg-white px-5 py-2 text-sky-600 transition-all duration-300 ease-in-out;
+}
+.dashed-effect-button-info::before {
+  @apply pointer-events-none absolute inset-0 rounded-xl border border-black transition-colors duration-300 ease-in-out content-[''];
+}
+
+.dashed-effect-button-danger {
+  @apply relative w-[200px] cursor-pointer rounded-xl border-none bg-white px-5 py-2 text-red-600 transition-all duration-300 ease-in-out;
+}
+.dashed-effect-button-danger::before {
+  @apply pointer-events-none absolute inset-0 rounded-xl border border-black transition-colors duration-300 ease-in-out content-[''];
+}
+
+.dash-top-left,
+.dash-bottom-right {
+  @apply absolute z-10 h-[1px] w-[32px] bg-white transition-colors duration-300 ease-in-out;
+}
+
+.dash-top-left {
+  @apply top-0 left-6;
+}
+
+.dash-bottom-right {
+  @apply right-6 bottom-0;
+}
+
+.dashed-effect-button-plain:hover {
+  @apply rounded-xl bg-black text-white;
+}
+
+.dashed-effect-button-danger:hover {
+  @apply rounded-xl bg-gradient-to-r from-red-500 to-orange-500 text-white;
+}
+
+.dashed-effect-button-info:hover {
+  @apply rounded-xl bg-sky-600 text-white;
+}
+
+.dashed-effect-button-plain:hover::before,
+.dashed-effect-button-info:hover::before,
+.dashed-effect-button-danger:hover::before {
+  @apply border-transparent;
+}
+
+.dashed-effect-button-plain:hover .dash-top-left,
+.dashed-effect-button-plain:hover .dash-bottom-right,
+.dashed-effect-button-info:hover .dash-top-left,
+.dashed-effect-button-info:hover .dash-bottom-right,
+.dashed-effect-button-danger:hover .dash-top-left,
+.dashed-effect-button-danger:hover .dash-bottom-right {
+  @apply bg-transparent;
+}
+
+/********* Bottone Rounded *********/
+
+.round-btn-plain {
+  @apply w-[200px] rounded-3xl border bg-transparent p-2 text-center;
+}
+.round-btn-plain:hover {
+  @apply bg-black text-white transition-colors duration-300 ease-in-out;
+}
+
+.round-btn-info {
+  @apply w-[200px] rounded-3xl border bg-sky-500 p-2 text-center text-white;
+}
+.round-btn-info:hover {
+  @apply bg-sky-800 transition-colors duration-300 ease-in-out;
+}
+
+.round-btn-danger {
+  @apply w-[200px] rounded-3xl border bg-gradient-to-r from-red-500 to-orange-500 p-2 text-center text-white;
+}
+.round-btn-danger:hover {
+  @apply bg-gradient-to-r from-red-700 to-red-700 transition-colors duration-300 ease-in-out;
+}
+
+/********* Bottone Plain *********/
+
+.button-plain {
+  @apply w-[200px] rounded-[12px] border bg-transparent p-2 text-center;
+}
+.button-info {
+  @apply w-[200px] rounded-[12px] border bg-gradient-to-r from-sky-400 to-sky-600 p-2 text-center text-white;
+}
+.button-danger {
+  @apply w-[200px] rounded-[12px] border bg-gradient-to-r from-red-500 to-orange-500 p-2 text-center text-white;
+}
+
+.button-plain:hover {
+  @apply bg-black text-white transition-colors duration-300 ease-in-out;
+}
+.button-info:hover {
+  @apply bg-gradient-to-r from-sky-800 to-sky-900 text-white transition-colors duration-300 ease-in-out;
+}
+.button-danger:hover {
+  @apply bg-gradient-to-r from-red-700 to-red-700 text-white transition-colors duration-300 ease-in-out;
+}
