@@ -5,8 +5,8 @@ body {
   margin: 0 auto;
 }
 
-h2{
-  @apply text-4xl
+h2 {
+  @apply text-4xl;
 }
 
 /********* Navbar *********/
@@ -100,21 +100,21 @@ button {
 
 /********* Bottone Forato *********/
 .dashed-effect-button-plain {
-  @apply relative w-[200px] cursor-pointer rounded-xl border-none bg-white px-5 py-2 text-black transition-all duration-300 ease-in-out;
+  @apply relative cursor-pointer rounded-xl border-none bg-white px-5 px-6 py-2 text-black transition-all duration-300 ease-in-out;
 }
 .dashed-effect-button-plain::before {
   @apply pointer-events-none absolute inset-0 rounded-xl border border-black transition-colors duration-300 ease-in-out content-[''];
 }
 
 .dashed-effect-button-info {
-  @apply relative w-[200px] cursor-pointer rounded-xl border-none bg-white px-5 py-2 text-sky-600 transition-all duration-300 ease-in-out;
+  @apply relative cursor-pointer rounded-xl border-none bg-white px-5 px-6 py-2 text-sky-600 transition-all duration-300 ease-in-out;
 }
 .dashed-effect-button-info::before {
   @apply pointer-events-none absolute inset-0 rounded-xl border border-black transition-colors duration-300 ease-in-out content-[''];
 }
 
 .dashed-effect-button-danger {
-  @apply relative w-[200px] cursor-pointer rounded-xl border-none bg-white px-5 py-2 text-red-600 transition-all duration-300 ease-in-out;
+  @apply relative cursor-pointer rounded-xl border-none bg-white px-5 px-6 py-2 text-red-600 transition-all duration-300 ease-in-out;
 }
 .dashed-effect-button-danger::before {
   @apply pointer-events-none absolute inset-0 rounded-xl border border-black transition-colors duration-300 ease-in-out content-[''];
@@ -122,15 +122,15 @@ button {
 
 .dash-top-left,
 .dash-bottom-right {
-  @apply absolute z-10 h-[1px] w-[32px] bg-white transition-colors duration-300 ease-in-out;
+  @apply absolute z-10 h-[1px] w-[24px] bg-white transition-colors duration-300 ease-in-out;
 }
 
 .dash-top-left {
-  @apply top-0 left-6;
+  @apply top-0 left-3;
 }
 
 .dash-bottom-right {
-  @apply right-6 bottom-0;
+  @apply right-3 bottom-0;
 }
 
 .dashed-effect-button-plain:hover {
@@ -163,21 +163,21 @@ button {
 /********* Bottone Rounded *********/
 
 .round-btn-plain {
-  @apply w-[200px] rounded-3xl border bg-transparent p-2 text-center;
+  @apply rounded-3xl border bg-transparent px-6 py-2 text-center;
 }
 .round-btn-plain:hover {
   @apply bg-black text-white transition-colors duration-300 ease-in-out;
 }
 
 .round-btn-info {
-  @apply w-[200px] rounded-3xl border bg-sky-500 p-2 text-center text-white;
+  @apply rounded-3xl border bg-sky-500 px-6 py-2 text-center text-white;
 }
 .round-btn-info:hover {
   @apply bg-sky-800 transition-colors duration-300 ease-in-out;
 }
 
 .round-btn-danger {
-  @apply w-[200px] rounded-3xl border bg-gradient-to-r from-red-500 to-orange-500 p-2 text-center text-white;
+  @apply rounded-3xl border bg-gradient-to-r from-red-500 to-orange-500 px-6 py-2 text-center text-white;
 }
 .round-btn-danger:hover {
   @apply bg-gradient-to-r from-red-700 to-red-700 transition-colors duration-300 ease-in-out;
@@ -186,13 +186,13 @@ button {
 /********* Bottone Plain *********/
 
 .button-plain {
-  @apply w-[200px] rounded-[12px] border bg-transparent p-2 text-center;
+  @apply rounded-[12px] border bg-white px-6 py-2 text-center;
 }
 .button-info {
-  @apply w-[200px] rounded-[12px] border bg-gradient-to-r from-sky-400 to-sky-600 p-2 text-center text-white;
+  @apply rounded-[12px] border bg-gradient-to-r from-sky-400 to-sky-600 px-6 py-2 text-center text-white;
 }
 .button-danger {
-  @apply w-[200px] rounded-[12px] border bg-gradient-to-r from-red-500 to-orange-500 p-2 text-center text-white;
+  @apply rounded-[12px] border bg-gradient-to-r from-red-500 to-orange-500 px-6 py-2 text-center text-white;
 }
 
 .button-plain:hover {
@@ -204,3 +204,50 @@ button {
 .button-danger:hover {
   @apply bg-gradient-to-r from-red-700 to-red-700 text-white transition-colors duration-300 ease-in-out;
 }
+
+/********* Bottone Icona *********/
+
+.circle-btn {
+  @apply rounded-full border bg-white p-2;
+}
+
+.circle-btn:hover {
+  @apply rounded-full border bg-black p-2 text-white transition-colors duration-300 ease-in-out;
+}
+
+.circle-btn-dark {
+  @apply rounded-full border bg-black p-2 text-white;
+}
+
+.circle-btn-dark:hover {
+  @apply rounded-full border bg-white p-2 text-black transition-colors duration-300 ease-in-out;
+}
+
+/********* Card Admin *********/
+
+.container {
+  @apply relative h-fit max-w-[380px] rounded-3xl border bg-[#d9d9d9] text-[16px];
+}
+
+.category {
+  @apply absolute top-[-1px] right-[-1px] w-fit rounded-tr-[24px] rounded-bl-[24px] bg-amber-500 p-4 text-white;
+}
+
+.content {
+  @apply mt-[64px] mb-4 flex flex-col gap-[24px] p-4;
+}
+
+.titolo {
+  @apply rounded-xl bg-white px-6 py-2;
+}
+
+.info-secondarie {
+  @apply rounded-xl bg-white px-6 py-2;
+}
+
+.info-secondarie-content {
+  @apply my-[12px] flex flex-col gap-[24px];
+}
+
+/********* Card User *********/
+/*TODO*/
