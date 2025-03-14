@@ -52,8 +52,8 @@ app.get("/", (req, res) => {
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
-  database: "da mettere",
+  password: "password",
+  database: "dbProva",
   port: 3306,
 });
 
@@ -98,6 +98,16 @@ app.post("/login", (req, res) => {
 app.get("/profile", authenticateToken, (req, res) => {
   // req.user contiene i dati dell'utente dal token
   res.json({ message: "Dati profilo", user: req.user });
+});
+
+app.get("/allProfiles", (req, res) => {
+  // console.log("Qua");
+  db.query("SELECT * FROM prova", (err, rows) => {
+    if (err) {
+      res.status(400);
+    }
+    res.status(200).json(rows);
+  });
 });
 
 app.listen(port, () => {

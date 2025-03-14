@@ -9,6 +9,10 @@ h2 {
   @apply text-4xl;
 }
 
+input {
+  @apply border;
+}
+
 /********* Navbar *********/
 
 /********* Generali *********/
@@ -58,6 +62,11 @@ button {
   @apply rounded-full bg-gradient-to-r from-red-500 to-orange-500;
   @apply text-white;
   @apply transition duration-250;
+  z-index: auto;
+}
+
+.icon-link:hover .submenu {
+  @apply z-50;
 }
 
 .sign-active {
@@ -188,6 +197,7 @@ button {
 .button-plain {
   @apply rounded-[12px] border bg-white px-6 py-2 text-center;
 }
+
 .button-info {
   @apply rounded-[12px] border bg-gradient-to-r from-sky-400 to-sky-600 px-6 py-2 text-center text-white;
 }
@@ -198,6 +208,7 @@ button {
 .button-plain:hover {
   @apply bg-black text-white transition-colors duration-300 ease-in-out;
 }
+
 .button-info:hover {
   @apply bg-gradient-to-r from-sky-800 to-sky-900 text-white transition-colors duration-300 ease-in-out;
 }
@@ -215,18 +226,10 @@ button {
   @apply rounded-full border bg-black p-2 text-white transition-colors duration-300 ease-in-out;
 }
 
-.circle-btn-dark {
-  @apply rounded-full border bg-black p-2 text-white;
-}
-
-.circle-btn-dark:hover {
-  @apply rounded-full border bg-white p-2 text-black transition-colors duration-300 ease-in-out;
-}
-
-/********* Card Admin *********/
+/********* Card Admin & User *********/
 
 .container {
-  @apply relative h-fit max-w-[380px] rounded-3xl border bg-[#d9d9d9] text-[16px];
+  @apply relative h-fit w-[300px] rounded-3xl border bg-[#d9d9d9] text-[16px];
 }
 
 .category {
@@ -242,12 +245,13 @@ button {
 }
 
 .info-secondarie {
-  @apply rounded-xl bg-white px-6 py-2;
+  @apply relative flex min-h-[160px] flex-col gap-[16px] overflow-hidden rounded-xl bg-white px-6 py-2;
 }
 
 .info-secondarie-content {
   @apply my-[12px] flex flex-col gap-[24px];
 }
 
-/********* Card User *********/
-/*TODO*/
+.data {
+  @apply absolute right-[12px] bottom-[12px] text-right;
+}

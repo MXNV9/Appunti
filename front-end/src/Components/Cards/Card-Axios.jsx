@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import axios from 'axios'; // Importa Axios
 import { Editbtn } from '../Buttons-icon/editable-btn';
 import { Plain } from '../Buttons-no-icon/plain';
 
-export const Card = ({
+export const CardAxios = ({
+  id, // Aggiungi un identificatore unico per la card
   role = 'admin',
   titolo = 'Titolo',
   categoria = 'Categoria',
@@ -31,30 +33,41 @@ export const Card = ({
     return <p className="font-bold text-red-600">Ruolo non contemplato!</p>;
   }
 
-  const handleEditToggle = () => {
+  const handleEditToggle = async () => {
     if (edit) {
-      // Quando si conferma la modifica, salviamo le modifiche nel contenuto
-      setEdit(false);
-    } else {
-      setEdit(true);
+      // Effettuare la chiamata PUT per aggiornare la card
+      const updatedCard = {
+        titolo: editedTitle,
+        categoria: editedCategory,
+        infoSecondarie: [{ Info1: editedInfo1, Info3: editedInfo3 }],
+      };
+      try {
+        const response = await axios.put(`/api/put/${id}`, updatedCard);
+        if (response.status === 200) {
+          console.log('Card aggiornata con successo');
+        } else {
+          console.log("Errore nell'aggiornamento della card");
+        }
+      } catch (error) {
+        console.error('Errore nella richiesta PUT:', error);
+      }
     }
+    setEdit(!edit);
   };
 
-  const handleDeleteToggle = () => {
-    if (del) {
-      // Quando si conferma l'eliminazione, eliminiamo la card
-      setDelete(false);
-    } else {
-      setDelete(true);
+  const handleDelete = async () => {
+    // Effettuare la chiamata DELETE per eliminare la card
+    try {
+      const response = await axios.delete(`/api/delete/${id}`);
+      if (response.status === 200) {
+        console.log('Card eliminata con successo');
+        setDelete(true); // Nasconde la card dopo l'eliminazione
+      } else {
+        console.log("Errore nell'eliminazione della card");
+      }
+    } catch (error) {
+      console.error('Errore nella richiesta DELETE:', error);
     }
-  };
-
-  const handleDelete = () => {
-    setEditedCategory(categoria);
-    setEditedInfo1(infoSecondarie[0].Info1);
-    setEditedInfo3(infoSecondarie[0].Info3);
-    setEditedTitle(titolo);
-    setEdit(false);
   };
 
   const renderInfo = info => {
@@ -132,8 +145,8 @@ export const Card = ({
               <div onClick={handleEditToggle}>
                 <Editbtn icona={edit ? 'Check' : 'Edit'} />
               </div>
-              <div onClick={edit ? handleDelete : handleDeleteToggle}>
-                <Editbtn icona={edit ? 'X' : 'Trash'} />
+              <div onClick={handleDelete}>
+                <Editbtn icona="Trash" />
               </div>
             </div>
           )}

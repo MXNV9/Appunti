@@ -1,29 +1,23 @@
-export const Plain = ({variante = 1, testo = "CTA"}) => {
-    if (variante === 1) {
-        return (
-          <div>
-            <button className="button-plain">
-              {testo}
-            </button>
-          </div>
-        );
-      }
-      if (variante === 2) {
-        return (
-          <div>
-            <button className="button-info">
-              {testo}
-            </button>
-          </div>
-        );
-      }
-      if (variante === 3) {
-        return (
-          <div>
-            <button className="button-danger">
-              {testo}
-            </button>
-          </div>
-        );
-      }
-}
+export const Plain = ({ variante = 'default', testo = 'CTA' }) => {
+  if (variante === 'default') {
+    return (
+      <div>
+        <button className="button-plain">{testo}</button>
+      </div>
+    );
+  }
+  if (variante === 'info') {
+    return (
+      <div>
+        <button className="button-info">{testo}</button>
+      </div>
+    );
+  }
+  if (variante === 'danger') {
+    return (
+      <div>
+        <button className="button-danger">{testo}</button>
+      </div>
+    );
+  }
+};
