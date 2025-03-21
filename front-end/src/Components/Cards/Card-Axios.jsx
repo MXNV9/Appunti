@@ -147,8 +147,11 @@ export const CardAxios = ({
                 />
               </div>
             ) : (
-              <div className="flex w-fit items-center rounded-xl border bg-white p-2 px-4">
-                <DollarSign /> {prezzoNew}
+              <div className="flex items-center justify-between">
+                <div className="flex w-fit items-center rounded-xl border bg-white p-2 px-4">
+                  <DollarSign /> {prezzoNew}
+                </div>
+                <div className="w-fit rounded-xl border bg-white p-2 text-right">{data}</div>
               </div>
             )}
           </div>

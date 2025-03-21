@@ -32,7 +32,7 @@ export const GetPage = () => {
               titolo={`${i.titolo}`}
               categoria={i.categoria}
               descrizioneLunga={i.descrizioneLunga}
-              data={i.dataInserimento}
+              data={fixData(i.dataModifica)}
               autore={i.autore}
               prezzo={i.prezzo}
             />
