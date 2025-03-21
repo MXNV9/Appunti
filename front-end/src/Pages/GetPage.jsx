@@ -1,42 +1,44 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Card } from '../Components/Cards/card';
+import useSWR from 'swr';
+import { CardAxios } from '../Components/Cards/Card-Axios';
 export const GetPage = () => {
-  const [data, setData] = useState([]);
+  const getAll = url => axios.get(url).then(res => res.data);
+  const { data, error, isLoading } = useSWR('http://localhost:8080/allProfiles', getAll);
 
-  const loadProfiles = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/allProfiles');
-      console.log(response.data);
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // console.log('dati: ', data);
+  // console.log('errori: ', error);
+  // console.log('Caricamento: ', isLoading);
 
   const fixData = string => {
     const step1 = string.split('T');
     const step2 = step1[0].split('-');
-    const result = `${step2[2]}/${step2[1]}/${step2[0]}`
-    return result
+    const result = `${step2[2]}/${step2[1]}/${step2[0]}`;
+    return result;
   };
 
-  useEffect(() => {
-    loadProfiles();
-  }, []);
-
   return (
-    <div>
-      {data.map((i, k) => (
-        <div key={k}>
-          <Card
-            role="admin"
-            titolo={`${i.titolo}`}
-            categoria={i.categoria}
-            infoSecondarie={[{ Info1: i.descrizioneLunga, Info2: fixData(i.dataInserimento) }]}
-          />
-        </div>
-      ))}
+    <div className="flex flex-col gap-[16px]">
+      <h1>Lista degli oggetti</h1>
+      {isLoading && <div> Caricamento... </div>}
+      {error && error.code + ' - ' + error.message}
+      <div className="flex flex-wrap gap-[16px]">
+        {data?.map(i => (
+          <div key={i.id}>
+            {' '}
+            {/* Usare i.id come chiave */}
+            <CardAxios
+              role="admin"
+              id={i.id}
+              titolo={`${i.titolo}`}
+              categoria={i.categoria}
+              descrizioneLunga={i.descrizioneLunga}
+              data={i.dataInserimento}
+              autore={i.autore}
+              prezzo={i.prezzo}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

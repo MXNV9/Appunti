@@ -6,6 +6,7 @@ import { InsertPage } from './Pages/insertPage';
 import { GetPage } from './Pages/GetPage';
 import { DraggableCard, MyComponent, NewsArticlePage } from './Components/Prove/motionInertia';
 import { AutocompleteSearchBar } from './Components/Prove/AutoComplete';
+import { CardAxios } from './Components/Cards/Card-Axios';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
               <NewsArticlePage />
               <hr />
               <AutocompleteSearchBar />
+              <hr />
+              <CardAxios />
             </div>
           }
         />

@@ -13,6 +13,10 @@ input {
   @apply border;
 }
 
+label {
+  @apply text-2xl font-semibold;
+}
+
 /********* Navbar *********/
 
 /********* Generali *********/
@@ -245,7 +249,7 @@ button {
 }
 
 .info-secondarie {
-  @apply relative flex min-h-[160px] flex-col gap-[16px] overflow-hidden rounded-xl bg-white px-6 py-2;
+  @apply relative flex min-h-[100px] flex-col gap-[16px] overflow-hidden rounded-xl bg-white px-6 py-2;
 }
 
 .info-secondarie-content {
@@ -254,4 +258,36 @@ button {
 
 .data {
   @apply absolute right-[12px] bottom-[12px] text-right;
+}
+
+/********* Campi del form *********/
+
+.form-field {
+  @apply flex w-[60%] flex-col justify-center gap-[12px];
+  @apply mx-auto;
+}
+
+.alert {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }

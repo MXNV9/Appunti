@@ -110,6 +110,84 @@ app.get("/allProfiles", (req, res) => {
   });
 });
 
+app.post("/newPost", (req, res) => {
+  if (req.body) {
+    const { titolo, prezzo, categoria, autore, descrizioneLunga } = req.body;
+
+    if (!titolo || !prezzo || !categoria || !autore || !descrizioneLunga) {
+      return res.status(400).send("Campi mancanti!");
+    }
+
+    const query =
+      "INSERT INTO dbProva.prova(titolo, prezzo, categoria,autore,descrizioneLunga)VALUES(?,?,?,?,?)";
+    db.query(
+      query,
+      [titolo, prezzo, categoria, autore, descrizioneLunga],
+      (err, rows) => {
+        if (!err) {
+          return res.status(200).send("Elemento inviato con successo!");
+        } else {
+          return res
+            .status(400)
+            .send("Richiesta non valida. Verifica i dati inviati." + err);
+        }
+      }
+    );
+  } else {
+    res.status(500).send("Qualcosa è andato storto");
+  }
+});
+
+app.put("/editContent/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const { titolo, prezzo, categoria, autore, descrizioneLunga } = req.body;
+
+  if (!titolo || !prezzo || !categoria || !autore || !descrizioneLunga) {
+    return res.status(400).send("Campi mancanti!");
+  }
+
+  if (prezzo < 0 || isNaN(prezzo)) {
+    return res.status(400).send("Prezzo non valido!");
+  }
+
+  if (isNaN(id) || id <= 0) {
+    return res.status(400).send("Id non valido!");
+  }
+  const query =
+    "UPDATE dbProva.prova SET titolo = ?, prezzo = ?, categoria = ?, autore = ?, descrizioneLunga = ?, dataModifica = CURRENT_TIMESTAMP WHERE id = ? ";
+  db.query(
+    query,
+    [titolo, prezzo, categoria, autore, descrizioneLunga, id],
+    (err, rows) => {
+      if (!err) {
+        res.status(200).send({
+          message: "Aggiornato con successo!",
+          data: { titolo, prezzo, categoria, autore, descrizioneLunga },
+        });
+      } else {
+        return res.status(500).send("Errore interno al server.");
+      }
+    }
+  );
+});
+
+app.delete("/deleteItem/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id) || id <= 0) {
+    return res.status(400).send("Id non valido!");
+  }
+  const query = "DELETE FROM dbProva.prova WHERE id = ?";
+  db.query(query, [id], (err, rows) => {
+    if (!err) {
+      res.status(200).send({
+        message: "Eliminato con successo!",
+      });
+    } else {
+      return res.status(500).send("Errore interno al server.");
+    }
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server in ascolto su ${port}`);
 });

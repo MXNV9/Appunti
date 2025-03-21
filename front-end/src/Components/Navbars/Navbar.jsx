@@ -1,10 +1,11 @@
 import { User } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react';
 
 export const Navbar = ({ link1, link2, link3, link4 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [subMenu, setSubMenu] = useState(false);
   return (
     <div className="flex items-center justify-between gap-[24px]">
@@ -12,16 +13,32 @@ export const Navbar = ({ link1, link2, link3, link4 }) => {
         Logo
       </div>
       <div className="flex items-center gap-[24px]">
-        <div className="link p-2 capitalize" onClick={() => navigate('/' + link1)}>
+        <div
+          className="link p-2 capitalize"
+          onClick={() => navigate('/' + link1)}
+          style={{ color: location.pathname === `/${link1}` ? 'orange' : 'black' }}
+        >
           {link1 || 'link 1'}
         </div>
-        <div className="link p-2 capitalize" onClick={() => navigate('/' + link2)}>
+        <div
+          className="link p-2 capitalize"
+          onClick={() => navigate('/' + link2)}
+          style={{ color: location.pathname === `/${link2}` ? 'orange' : 'black' }}
+        >
           {link2 || 'link 2'}
         </div>
-        <div className="link p-2 capitalize" onClick={() => navigate('/' + link3)}>
+        <div
+          className="link p-2 capitalize"
+          onClick={() => navigate('/' + link3)}
+          style={{ color: location.pathname === `/${link3}` ? 'orange' : 'black' }}
+        >
           {link3 || 'link 3'}
         </div>
-        <div className="link p-2 capitalize" onClick={() => navigate('/' + link4)}>
+        <div
+          className="link p-2 capitalize"
+          onClick={() => navigate('/' + link4)}
+          style={{ color: location.pathname === `/${link4}` ? 'orange' : 'black' }}
+        >
           {link4 || 'link 4'}
         </div>
         <div className="relative">
@@ -40,12 +57,18 @@ export const Navbar = ({ link1, link2, link3, link4 }) => {
                 >
                   <li
                     className="mb-4 rounded-3xl from-red-500 to-orange-500 hover:bg-gradient-to-r hover:text-white"
-                    onClick={() => navigate('/login')}
+                    onClick={() => {
+                      navigate('/login');
+                      setSubMenu(false);
+                    }}
                   >
                     Accedi
                   </li>
                   <li
-                    onClick={() => navigate('/register')}
+                    onClick={() => {
+                      navigate('/register');
+                      setSubMenu(false);
+                    }}
                     className="rounded-3xl from-orange-500 to-red-500 px-2 hover:bg-gradient-to-r hover:text-white"
                   >
                     Registrati

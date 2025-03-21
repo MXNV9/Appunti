@@ -1,27 +1,26 @@
+import axios from 'axios';
+import { mutate } from 'swr';
 import { useState } from 'react';
-import axios from 'axios'; // Importa Axios
 import { Editbtn } from '../Buttons-icon/editable-btn';
 import { Plain } from '../Buttons-no-icon/plain';
+import { DollarSign } from 'lucide-react';
 
 export const CardAxios = ({
   id, // Aggiungi un identificatore unico per la card
   role = 'admin',
   titolo = 'Titolo',
+  autore,
   categoria = 'Categoria',
-  infoSecondarie = [
-    {
-      Info1: 'Descrizione lunga',
-      Info2: '22-01-2025',
-      Info3: 'Descrizione Corta' || '',
-    },
-  ],
+  descrizioneLunga,
+  data,
+  prezzo,
 }) => {
   const [edit, setEdit] = useState(false);
-  const [editedCategory, setEditedCategory] = useState(categoria);
   const [editedTitle, setEditedTitle] = useState(titolo);
-  const [editedInfo1, setEditedInfo1] = useState(infoSecondarie[0].Info1);
-  const [editedInfo3, setEditedInfo3] = useState(infoSecondarie[0].Info3);
-  const [del, setDelete] = useState(false);
+  const [editedCategory, setEditedCategory] = useState(categoria);
+  const [descrizioneNew, setDescrizioneLunga] = useState(descrizioneLunga);
+  const [prezzoNew, SetPrezzo] = useState(prezzo);
+  const [message, setMessage] = useState({ text: '', type: '' }); // Stato per messaggi
 
   const roles = {
     admin: 'admin',
@@ -33,40 +32,52 @@ export const CardAxios = ({
     return <p className="font-bold text-red-600">Ruolo non contemplato!</p>;
   }
 
-  const handleEditToggle = async () => {
+  const handleEditToggle = async url => {
     if (edit) {
       // Effettuare la chiamata PUT per aggiornare la card
       const updatedCard = {
         titolo: editedTitle,
         categoria: editedCategory,
-        infoSecondarie: [{ Info1: editedInfo1, Info3: editedInfo3 }],
+        descrizioneLunga: descrizioneNew,
+        autore: autore,
+        prezzo: prezzoNew,
       };
       try {
-        const response = await axios.put(`/api/put/${id}`, updatedCard);
-        if (response.status === 200) {
-          console.log('Card aggiornata con successo');
-        } else {
-          console.log("Errore nell'aggiornamento della card");
-        }
+        await mutate(
+          url,
+          async () => {
+            const response = await axios.put(url, updatedCard);
+            return response.data;
+          },
+          { revalid: true }
+        );
+        setMessage({ text: 'Annuncio aggiornato con successo!', type: 'success' }); // Messaggio di successo
       } catch (error) {
-        console.error('Errore nella richiesta PUT:', error);
+        setMessage({
+          text: 'Errore durante l’invio dell’annuncio. Riprova più tardi. ',
+          type: 'error',
+        }); // Messaggio di errore
       }
     }
-    setEdit(!edit);
   };
 
-  const handleDelete = async () => {
-    // Effettuare la chiamata DELETE per eliminare la card
+  const handleDelete = async (url, id) => {
     try {
-      const response = await axios.delete(`/api/delete/${id}`);
-      if (response.status === 200) {
-        console.log('Card eliminata con successo');
-        setDelete(true); // Nasconde la card dopo l'eliminazione
-      } else {
-        console.log("Errore nell'eliminazione della card");
-      }
+      // Aggiornamento ottimistico: rimuove l'elemento localmente
+      mutate(
+        'http://localhost:8080/allProfiles',
+        data => data.filter(item => item.id !== id),
+        false
+      );
+
+      // Effettua la richiesta DELETE
+      await axios.delete(`${url}${id}`);
+
+      // Rifetch dei dati per sincronizzare con il server
+      mutate('http://localhost:8080/allProfiles');
     } catch (error) {
-      console.error('Errore nella richiesta DELETE:', error);
+      console.error('Errore durante la cancellazione:', error);
+      setMessage({ text: 'Errore durante l’eliminazione. Riprova più tardi.', type: 'error' });
     }
   };
 
@@ -78,78 +89,99 @@ export const CardAxios = ({
   const titoloClass = 'titolo'; // Solo variante light
   const infoClass = 'info-secondarie'; // Solo variante light
 
-  if (del) {
-    // Se la card è stata eliminata (del è true), non la mostriamo più
-    return null;
-  }
-
   return (
-    <div className={containerClass}>
-      <div className="category">
-        {edit ? (
-          <input
-            type="text"
-            value={editedCategory}
-            onChange={e => setEditedCategory(e.currentTarget.value)}
-          />
-        ) : (
-          editedCategory
-        )}
-      </div>
-      <div className="content">
-        <div className={titoloClass}>
+    <div>
+      {message.text && (
+        <div className={`alert ${message.type === 'success' ? 'alert-success' : 'alert-error'}`}>
+          {message.text}
+        </div>
+      )}
+      <div className={containerClass}>
+        {/* Messaggio dinamico */}
+        <div className="category">
           {edit ? (
             <input
               type="text"
-              value={editedTitle}
-              onChange={e => setEditedTitle(e.currentTarget.value)}
+              value={editedCategory}
+              onChange={e => setEditedCategory(e.currentTarget.value)}
             />
           ) : (
-            editedTitle
+            editedCategory
           )}
         </div>
-        <div className={infoClass}>
-          {infoSecondarie.map((i, k) => (
-            <div key={k} className="info-secondarie-content">
-              {edit ? (
-                <div className="mb-[12px] w-full">
-                  <textarea
-                    className="h-[150px] w-full rounded-xl px-1 pb-4"
-                    value={editedInfo1}
-                    onChange={e => setEditedInfo1(e.currentTarget.value)}
-                  />
-                  <div>
-                    <input
-                      type="text"
-                      value={editedInfo3}
-                      onChange={e => setEditedInfo3(e.currentTarget.value)}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {renderInfo(editedInfo1)}
-                  {renderInfo(editedInfo3)}
-                  <p className="data">{i.Info2}</p>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="flex items-center justify-center gap-[24px]">
-          <div>
-            <Plain testo="Scopri di più" />
+        <div className="content">
+          <div className={titoloClass}>
+            {edit ? (
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={e => setEditedTitle(e.currentTarget.value)}
+              />
+            ) : (
+              editedTitle
+            )}
           </div>
-          {role === 'admin' && (
-            <div className="flex gap-[24px]">
-              <div onClick={handleEditToggle}>
-                <Editbtn icona={edit ? 'Check' : 'Edit'} />
+
+          <div className={infoClass}>
+            {edit ? (
+              <div>
+                <textarea
+                  className="h-[140px] w-full"
+                  value={descrizioneNew}
+                  onChange={e => setDescrizioneLunga(e.currentTarget.value)}
+                ></textarea>
               </div>
-              <div onClick={handleDelete}>
-                <Editbtn icona="Trash" />
+            ) : (
+              renderInfo(descrizioneNew)
+            )}
+          </div>
+
+          <div>
+            {edit ? (
+              <div className="w-[200px]">
+                <input
+                  type="number"
+                  value={prezzoNew}
+                  className="w-fit rounded-xl border-none bg-white px-4 py-2 outline-none"
+                  onChange={e => SetPrezzo(e.currentTarget.value)}
+                />
               </div>
+            ) : (
+              <div className="flex w-fit items-center rounded-xl border bg-white p-2 px-4">
+                <DollarSign /> {prezzoNew}
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-center gap-[24px]">
+            <div>
+              <Plain testo="Scopri di più" />
             </div>
-          )}
+            {role === 'admin' && (
+              <div className="flex gap-[24px]">
+                <div
+                  onClick={() => {
+                    setEdit(true);
+                    handleEditToggle('http://localhost:8080/editContent/' + id);
+                  }}
+                >
+                  <Editbtn icona={edit ? 'Check' : 'Edit'} />
+                </div>
+                <div
+                  onClick={() => {
+                    if (!edit) {
+                      handleDelete('http://localhost:8080/deleteItem/', id);
+                      mutate('http://localhost:8080/allProfiles');
+                    } else {
+                      setEdit(false);
+                    }
+                  }}
+                >
+                  <Editbtn icona={edit ? 'X' : 'Trash'} />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

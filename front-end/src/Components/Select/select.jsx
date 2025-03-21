@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 
-export const Select = ({ data }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const handleChange = option => {
-    setSelectedOption(option);
-    console.log('Valore selezionato:', option.value);
-  };
+export const Select = ({ data, value, onChange }) => {
   return (
-    <div>
+    <div className=''>
       <CreatableSelect
         isClearable
         options={data}
-        onChange={handleChange}
-        value={selectedOption}
+        onChange={onChange}
+        value={data.find(option => option.value === value) || null}
         placeholder="Seleziona..."
       />
     </div>
