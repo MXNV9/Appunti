@@ -9,3 +9,5 @@
 [Font](https://fontsinuse.com/)
 
 [Cloudinary - per le immagini](https://cloudinary.com/image-api)
+
+uso di swr per fare le query
